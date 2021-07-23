@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Nav from './components/Nav';
-import firebase from './firebase';
+import React, { useState, useEffect } from 'react'
+import firebase from './firebase'
 import {
   BrowserRouter as Router,
   Switch,
   Route
-} from 'react-router-dom';
+} from 'react-router-dom'
+
+import { Layout } from './layout'
+import { Home, Videos } from './pages'
 
 function App() {
   const [data, setData] = useState([])
@@ -36,9 +38,17 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
-        <Nav />
-        {data.map((item) => <h1>{item.Title}</h1>)}
+      <div className="App overflow-hidden w-full">
+        <Layout>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/videos">
+              <Videos />
+            </Route>
+          </Switch>
+        </Layout>
       </div>
     </Router>
   );
