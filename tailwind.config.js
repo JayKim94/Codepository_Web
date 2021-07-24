@@ -5,7 +5,7 @@ module.exports = {
     extend: {},
     minHeight: {
       '0': '0',
-      'bar': '80px',
+      'bar': '90px',
       'panel': '350px',
       'page': '100%',
     }

@@ -1,21 +1,26 @@
+import { FirebaseAuthConsumer } from '@react-firebase/auth';
 import React from 'react'
-import Nav from './Nav'
-import Search from './Search'
+import TopBar from './TopBar'
 
 function Layout(props) {
   return (
-    <div className='w-screen h-screen flex'>
-      <Nav className='row-span-2' />
-      <div
-        className='w-full bg-gray-100'>
-        <Search />
-        <div
-          className='px-12 py-5'>
-          {props.children}
-        </div>
-      </div>
-    </div>
+    <FirebaseAuthConsumer>
+      {({ isSignedIn, user, providerId }) => {
+        return (
+          <div className='w-full h-screen flex'>
+            <div
+              className='w-full bg-gray-100'>
+              <TopBar user={user} />
+              <div
+                className='px-60 py-10'>
+                {props.children}
+              </div>
+            </div>
+          </div>
+        );
+      }}
+    </FirebaseAuthConsumer>
   )
 }
 
-export { Layout, Nav };
+export { Layout };
