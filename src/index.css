@@ -17,6 +17,10 @@ html, body {
   pointer-events: none !important;
 }
 
+.warning {
+  border: 1px solid crimson;
+}
+
 .fadeInOnEnter {
   transition: all;
   -webkit-animation: fadein 500ms; /* Safari, Chrome and Opera > 12.1 */

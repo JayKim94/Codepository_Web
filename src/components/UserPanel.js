@@ -1,13 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useRef } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import { firebase } from '../firebase'
 
 function UserPanel({ user }) {
   const [isOpened, setIsOpened] = useState(false);
   const panelRef = useRef(null);
+  const history = useHistory();
 
   function onLogOut() {
     firebase.auth().signOut();
+    window.location.reload();
+    history.push('/');
   }
 
   const Panel = (user) => {
@@ -15,7 +18,7 @@ function UserPanel({ user }) {
 
     const header = () => (
       <div
-        className='flex items-center gap-5 mb-5'>
+        className='flex items-center gap-5 mb-5 px-5 pt-5'>
         <img
           className='rounded-full shadow'
           src='https://picsum.photos/42' width='42' height='42' />
@@ -35,7 +38,7 @@ function UserPanel({ user }) {
 
     const panelMenu = () => (
       <ul
-        className='border-t border-b pl-1 py-5 flex flex-col gap-2'>
+        className='border-t border-b pl-7 py-5 flex flex-col gap-2'>
         <li>
           <Link
             className='flex gap-3 items-center text-gray-500 hover:text-blue-500'
@@ -75,12 +78,12 @@ function UserPanel({ user }) {
     return (
       <div
         ref={panelRef}
-        className='absolute fadeInOnEnter w-80 -left-72 -bottom-72 rounded shadow-lg p-5 flex flex-col bg-white'>
+        className='z-50 absolute fadeInOnEnter w-80 -left-72 -bottom-72 rounded shadow-lg flex flex-col bg-white'>
         {header()}
         {panelMenu()}
         <button
           onClick={onLogOut}
-          className='text-red-400 text-xs py-2 rounded-b hover:bg-red-400 hover:text-white'>
+          className='text-red-400 text-xs font-semibold py-3 rounded-b hover:bg-red-400 hover:text-white'>
           Log Out
         </button>
       </div >

@@ -2,7 +2,9 @@ import React, { useRef, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import { firebase, googleProvider } from '../firebase'
 
-function Login() {
+import TextBox from '../components/TextBox';
+
+function Login(props) {
   const loginButton = useRef(null);
   const history = useHistory();
 
@@ -17,17 +19,17 @@ function Login() {
     firebase.auth()
       .signInWithPopup(googleProvider)
       .then(result => {
-        const user = result.user;
       }).catch(err => {
         console.error(err.message);
       })
   }
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) history.push('/');
-    })
-  }, []);
+    if (props.user) {
+
+      history.push('/')
+    };
+  });
 
   return (
     <form
@@ -41,25 +43,15 @@ function Login() {
       </span>
       <div
         className='flex flex-col w-96'>
-        <label
-          className='text-xl font-thin mb-3 pl-1 pb-2 border-b border-gray-300'
-          htmlFor="id">
-          E-MAIL
-        </label>
-        <input
-          className='px-5 py-3 focus:outline-none'
+        <TextBox
+          label='E-mail'
           type='email'
-          placeholder='Your e-mail address'
+          placeholder='Your email address'
         />
-        <label
-          className='text-xl font-thin mb-3 mt-5 pl-1 pb-2 border-b border-gray-300'
-          htmlFor="id">
-          PASSWORD
-        </label>
-        <input
-          className='px-5 py-3 focus:outline-none'
+        <TextBox
+          label='Password'
           type='password'
-          placeholder='Password'
+          placeholder='Your password'
         />
       </div>
       <button

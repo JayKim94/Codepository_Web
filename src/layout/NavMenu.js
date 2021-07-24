@@ -12,10 +12,10 @@ function NavMenu(props) {
         {menu.map((navItem, i) => (
           <li
             key={i}
-            className='flex items-center gap-3'>
+            className='flex items-center gap-3 text-gray-800 hover:text-blue-600'>
             <img src={navItem.icon} width="16" height="16" alt={navItem.alt} />
             <span
-              className='font-semibold text-gray-800'>{navItem.title}
+              className='font-semibold'>{navItem.title}
             </span>
           </li>
         ))}

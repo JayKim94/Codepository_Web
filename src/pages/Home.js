@@ -38,9 +38,9 @@ function Home() {
 
     return (
       <div
-        className='flex flex-wrap gap-x-5 w-full overflow-y-auto'>
+        className='flex flex-wrap justify-center gap-x-5 py-5 w-full overflow-y-auto'>
         {data.map((item, i) => (
-          <Card key={i} videos={item} />
+          <Card key={i} video={item} />
         ))}
       </div>
     );
@@ -53,7 +53,7 @@ function Home() {
   return (
     <div>
       <p
-        className='text-xl font-bold text-gray-600 my-3'>
+        className='text-2xl font-bold text-gray-600'>
         Recently Added
       </p>
       {RecentlyAddedCards()}

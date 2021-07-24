@@ -1,6 +1,7 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import UserPanel from '../components/UserPanel';
+import Button from '../components/Button';
 import NavMenu from './NavMenu';
 
 const navs = [
@@ -41,6 +42,8 @@ const navs = [
 ]
 
 function TopBar(props) {
+  const history = useHistory()
+
   const Logo = () => (
     <NavLink
       to='/'
@@ -59,30 +62,40 @@ function TopBar(props) {
     </ul>
   );
 
-  const UserStatus = ({ user }) => {
-    console.log(user)
+  const UserStatus = (user) => {
     if (user) {
       return (
-        <UserPanel user={user} />
+        <div
+          className='flex gap-5'>
+          <UserPanel user={user} />
+          {user.role === 'admin' && (
+            <button
+              onClick={() => history.push('/upload')}
+              className='bg-blue-500 shadow rounded text-white text-sm font-semibold px-5'>
+              Upload
+            </button>
+          )}
+        </div>
       );
     } else {
       return (
-        <button
+        <Button
           className='mx-10 py-1.5 px-5 text-white border bg-blue-500 rounded shadow flex items-center gap-2'>
           <NavLink
             to='/login'
             className='font-semibold text-sm'>
             Log In
           </NavLink>
-        </button>
+        </Button>
       );
     }
   }
+
   const SearchBox = () => (
     <div
       className='flex gap-2 mr-5'>
       <input
-        className='border px-5 rounded outline-none focus:outline-none focus:bg-blue-100 focus:placeholder-blue-100 focus:shadow transition-all'
+        className='w-72 border px-5 rounded outline-none focus:outline-none focus:bg-blue-100 focus:placeholder-blue-100 focus:shadow transition-all'
         type='text'
         placeholder='Search resources...'
       />
@@ -95,16 +108,16 @@ function TopBar(props) {
 
   return (
     <div
-      className='min-h-bar flex items-center justify-end px-20'>
+      className='flex items-center justify-end px-32 py-10'>
       <div
-        className='self-align-start flex items-center w-full gap-10 pl-6'>
+        className='self-align-start flex items-center w-full gap-10'>
         {Logo()}
         {NavLinks()}
+        {SearchBox()}
       </div>
       <div
-        className='flex-none flex gap-5'>
-        {SearchBox()}
-        {UserStatus(props)}
+        className='flex-none flex'>
+        {UserStatus(props.user)}
       </div>
     </div>
   )

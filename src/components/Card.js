@@ -1,28 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function Card(props) {
+  const [isHovering, setIsHovering] = useState(false)
+
+  function formatURL() {
+    const fullURL = props.video.url
+    const index = fullURL.indexOf('/c/')
+    return fullURL.substring(index + 3);
+  }
 
   return (
     <div
-      className='w-64 h-72 rounded-xl shadow-xl bg-white flex flex-col justify-between items-center pt-8 my-4'>
+      onClick={() => {
+        window.open(props.video.url, '_blank').focus();
+      }}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+      className='cursor-pointer w-72 h-82 rounded-xl shadow-xl bg-white flex flex-col justify-between items-center pt-8 my-4'>
       <div
-        className='object-contain my-5'>
-        <img src='./youtube.png' width='36' height='36' />
+        className={`px-7 mb-5 transition-all ${isHovering ? 'scale-110' : 'opacity-25'}`}>
+        <img
+          className='object-contain rounded-lg'
+          src='https://picsum.photos/256/128'
+        />
       </div>
       <span
-        className="w-60 font-semibold text-xl my-1 text-center">
-        {props.videos.title}
+        className="w-62 font-semibold text-xl my-1 text-center">
+        {props.video.title}
       </span>
-      <span
-        className="w-40 text-gray-400 text-sm text-center truncate">
-        {props.videos.url}
-      </span>
+      <div
+        className='flex flex-col'>
+        <span
+          className="w-48 text-blue-600 font-semibold text-center truncate">
+          {props.video.author}
+        </span>
+        <span
+          className="w-48 text-gray-400 text-sm text-center truncate">
+          {formatURL()}
+        </span>
+      </div>
       <div
         className="justify-self-end w-full mt-8 text-white font-semibold bg-blue-500 rounded-b-lg text-center">
         <a
-          className="block py-2 w-full h-full"
-          href={props.videos.url}
-          target="_blank">
+          className="block py-2 w-full h-full">
           View
         </a>
       </div>
